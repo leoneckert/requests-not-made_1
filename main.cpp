@@ -19,8 +19,6 @@
 using namespace Tins;
 using namespace std; 
 
-
-
 map<string, vector<string>> activeDevices; // Map1
 void printActiveDevices(){
     for (auto& y : activeDevices){
@@ -32,6 +30,7 @@ void printActiveDevices(){
         }
     }
 }
+
 map<string, map<string, int>> hostsSubHosts; // Map2
 void printHostMap(){
     for (auto& y : hostsSubHosts){
@@ -41,6 +40,8 @@ void printHostMap(){
         }
     }
 }
+
+
 
 long currentTime(){
     time_t  timev;
@@ -361,15 +362,15 @@ void startSniffing(std::string _interface, bool monitorMode){
         
         while(Packet pkt = sniffer.next_packet()) {
             
-            vector<string> headersWanted = {"Referrer"};
+            vector<string> headersWanted = {"Host: ","GET"};
             vector<string> headerVector = get_headers_from_pkts(headersWanted, pkt);
             //update Map1, take our old elemenets
             //process vector
-//            updateActiveDevices(2);
-//            processLine(headerVector, headersWanted);
+            updateActiveDevices(2);
+            processLine(headerVector, headersWanted);
 //            printActiveDevices();
-            printOutputVector(headerVector, headersWanted);
-//            printHostMap();
+//            printOutputVector(headerVector, headersWanted);
+            printHostMap();
             
         }
     }catch(...){}
